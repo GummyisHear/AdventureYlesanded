@@ -29,6 +29,41 @@ select * from GetEmployees()
 update GetEmployees() set Name='Sam1' where EmployeeKey=1;
 
 
+-------------------------------------------------------------------------------
+-- ülesanne 33
+select * from DimEmployee;
 
+-- Skaleeritav funktsioon ilma krüpteerimata
+create function fn_GetEmployeeNameById(@Id int)
+returns nvarchar(20)
+as begin
+return (select concat(FirstName, ' ', LastName) from DimEmployee Where EmployeeKey=@Id)
+end
+--käivitame funktsiooni
+select EmployeeKey, dbo.fn_GetEmployeeNameById(EmployeeKey) as Name 
+from DimEmployee;
+--Näitab funktsiooni kood
+sp_helptext 'fn_GetEmployeeNameById';
+
+--Nüüd muudame funktsiooni ja krüpteerime selle ära:
+alter function fn_GetEmployeeNameById(@Id int)
+returns nvarchar(20)
+with encryption
+as begin
+return (select concat(FirstName, ' ', LastName) from DimEmployee Where EmployeeKey=@Id)
+end
+-- käivitame funktsiooni
+select EmployeeKey, dbo.fn_GetEmployeeNameById(EmployeeKey) as Name 
+from DimEmployee;
+--Näitab: The text for object 'fn_GetEmployeeNameById' is encrypted.
+sp_helptext 'fn_GetEmployeeNameById';
+
+--Nüüd muuda funktsiooni ja kasuta käsklust WITH SCHEMABINDING valikut.
+alter function fn_GetEmployeeNameById(@Id int)
+returns nvarchar(20)
+with encryption
+as begin
+return (select concat(FirstName, ' ', LastName) from DimEmployee Where EmployeeKey=@Id)
+end
 
 
