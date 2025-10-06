@@ -75,10 +75,28 @@ on DimEmployee(BaseRate);
 -- kuva BaseRate veerg
 select BaseRate from DimEmployee;
 
+--Järgnev SELECT päring saab kasu Salary veeru indeksist 
+-- kuva töötajad kelle tasu on 20 kuni 50 vahemikus
 select * from DimEmployee where BaseRate > 20 and BaseRate < 50;
 
+--Mitte ainult SELECT käsklus, vaid isegi DELETE ja UPDATE väljendid saavad indeksist kasu.
+-- kustuta töötaja
+delete from DimEmployee where BaseRate=24.5192
+--uuenda töötajate tasu
+update DimEmployee set BaseRate=30 where BaseRate=25.00
 
+--Indeksid saavad aidata päringuid
+--väljastab read sorteeritud järjestuses
+select * from DimEmployee order by BaseRate
+--tagurpidi skanneerimine
+select * from DimEmployee order by BaseRate desc
 
+--GROUP BY päringud saavad kasu indeksitest. 
+--Kuna järjestikuses registrikirjes on vastavaid palku, siis tuleb kiiresti lugeda töötajate koguarv igal palgal.
+select BaseRate, COUNT(BaseRate) as Total
+from DimEmployee
+group by BaseRate;
 
-
-
+--Indeksi miinused:
+--Lisa ruumi kõvakettal
+--Sisestatud uuendus ja kustutamise käsud võivad olla aeglased
