@@ -61,9 +61,15 @@ sp_helptext 'fn_GetEmployeeNameById';
 --Nüüd muuda funktsiooni ja kasuta käsklust WITH SCHEMABINDING valikut.
 alter function fn_GetEmployeeNameById(@Id int)
 returns nvarchar(20)
-with encryption
+with SchemaBinding
 as begin
-return (select concat(FirstName, ' ', LastName) from DimEmployee Where EmployeeKey=@Id)
+return (select concat(FirstName, ' ', LastName) from dbo.DimEmployee Where EmployeeKey=@Id)
 end
+-- Could not drop object 'DimEmployee' because it is referenced by a FOREIGN KEY constraint.
+drop table DimEmployee;
+-- Schemabinding täpsustab, et funktsioon on seotud andmebaasi objektiga. 
+-- Selle kasutamisel ei saa baasobjekti muuta
+
+
 
 
