@@ -35,3 +35,40 @@ on DimEmployee(Gender DESC, BaseRate ASC);
 --loome mitte-klastreeritud indeks
 create NonClustered index IX_DimEmployee_FirstName
 on DimEmployee(FirstName)
+
+-----------------------------------------------------------------------------------
+-- 37. Unikaalne ja mitte-unikaalne indeks
+
+sp_helpindex DimEmployee
+-- ei saa need andmed lisada sest Id peab olema unikaalne
+insert into DimEmployee(EmployeeKey, FirstName) values (1, 'Mike')
+insert into DimEmployee(EmployeeKey, FirstName) values (1, 'John')
+-- ei saa kustutada
+drop index DimEmployee.PK_DimEmployee_EmployeeKey;
+
+-- kui kustutame, siis saame andmed lisada sest nüüd Id ei pea unikaalne olla
+insert into DimEmployee(EmployeeKey, FirstName) values (1, 'Mike')
+insert into DimEmployee(EmployeeKey, FirstName) values (1, 'John')
+
+--Kuidas saab luua unikaalset mitte-klastreeritud indeksit FirstName ja LastName veeru põhjal
+Create Unique NonClustered Index UIX_DimEmployee_FirstName_LastName
+On DimEmployee(FirstName, LastName)
+
+--Kui peaksid lisama unikaalse piirangu, siis unikaalne indeks luuakse tagataustal.
+ALTER TABLE DimEmployee
+ADD CONSTRAINT UQ_DimEmployee_EmailAddress
+UNIQUE NONCLUSTERED (EmailAddress)
+--kuvame kõik piirangud tabelis
+sp_helpconstraint DimEmployee
+
+--Kui soovin ainult viie rea tagasi lükkamist ja viie mitte korduva sisestamist, siis selleks kasutatakse IGNORE_DUP_KEY valikut.
+CREATE UNIQUE INDEX IX_DimEmployee_EmailAddress
+ON DimEmployee(EmailAddress)
+WITH IGNORE_DUP_KEY
+
+
+
+
+
+
+
