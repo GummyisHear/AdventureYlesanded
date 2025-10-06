@@ -103,3 +103,9 @@ exec spCreateLocalTempTable
 --otsime tabel, peab tagastada tühi name, sest tabel on kustutatud
 select name from tempdb..sysobjects
 where name like '#PersonDetails%';
+
+--Loome globaalne ajutine tabel, seda nähtavad kõikidele ühendustele serveris
+create table ##EmployeeDetails(Id int primary key identity(1,1),
+Name nvarchar(20))
+
+
