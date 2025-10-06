@@ -66,6 +66,16 @@ CREATE UNIQUE INDEX IX_DimEmployee_EmailAddress
 ON DimEmployee(EmailAddress)
 WITH IGNORE_DUP_KEY
 
+------------------------------------------------------------------------------------------
+-- 38. Indeksi plussid ja miinused
+
+--Loo mitte-klastreeritud indeks Salary veerule:
+create nonclustered index IX_DimEmployee_BaseRate
+on DimEmployee(BaseRate);
+-- kuva BaseRate veerg
+select BaseRate from DimEmployee;
+
+select * from DimEmployee where BaseRate > 20 and BaseRate < 50;
 
 
 
