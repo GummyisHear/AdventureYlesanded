@@ -1,4 +1,12 @@
 -----------------------------------------------------------------------------------
 -- 35. Indeksid serveris
 
-select * from DimEmployee
+-- kuvame andmed
+select EmployeeKey, FirstName, BaseRate, Gender from DimEmployee;
+-- kuvame ainult need töötajad kelle tasu on vahemikus 20 kuni 50
+select EmployeeKey, FirstName, BaseRate, Gender from DimEmployee
+where BaseRate > 20 and BaseRate < 50;
+--Nüüd loome indeksi, mis aitab päringut: Loome indeksi Salary veerule.
+create index IX_DimEmployee_BaseRate
+on DimEmployee(BASERATE ASC)
+
