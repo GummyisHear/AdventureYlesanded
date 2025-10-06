@@ -1,1 +1,4 @@
-awd
+git config --global user.name "artjompoldsaar"
+git config --global user.email "artjompoldsaar@gmail.com"
+git init
+git config --global --list

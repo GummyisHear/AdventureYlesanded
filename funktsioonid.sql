@@ -1,3 +1,5 @@
+use AdventureWorksDW2019;
+
 --funktsioonid
 
 select * from DimEmployee
@@ -22,6 +24,10 @@ return
 end
 --käivita funktsiooni 2
 select * from GetEmployees2()
+
+select * from GetEmployees()
+update GetEmployees() set Name='Sam1' where EmployeeKey=1;
+
 
 
 
