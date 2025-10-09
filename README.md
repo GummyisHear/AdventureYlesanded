@@ -7,3 +7,9 @@
 
 ## Indeksid
 <img width="452" height="173" alt="{3B4095CF-9079-480C-8DB9-303F7FF89F98}" src="https://github.com/user-attachments/assets/c149206a-ec51-4c9a-a2aa-996e679cf6b8" />
+
+## Vaated
+<img width="339" height="299" alt="{20F2C7BB-F97D-49F8-B854-2DC88B527290}" src="https://github.com/user-attachments/assets/dd900f21-7ac5-4fe0-b6f6-c29b8b065089" />
+
+## Trigerid
+<img width="313" height="223" alt="{AFB90B5F-3829-4858-B374-59407D121C16}" src="https://github.com/user-attachments/assets/6b5277ff-1078-4936-a1ec-2da0e44aec13" />
