@@ -47,3 +47,44 @@ group by s.SalesTerritoryRegion;
 select * from EmployeesCountByTerritory;
 
 --alter view, drop view
+
+----------------------------------------------------------------------
+-- 40. View uuendused
+
+--view tagastab peaaegu kõik veerud, aga va BaseRate veerg.
+create view EmployeesDataExceptSalary
+as
+select EmployeeKey, FirstName, Gender, SalesTerritoryKey
+from DimEmployee
+--käivitame
+select * from EmployeesDataExceptSalary;
+
+--Järgnev päring uuendab FirstName veerus olevat nime Guy Mikey peale
+update EmployeesDataExceptSalary
+set FirstName = 'Mikey' where EmployeeKey = 1;
+
+--Samas on võimalik sisestada ja kustutada ridu baastabelis ning kasutada view-d.
+delete from EmployeesDataExceptSalary where EmployeeKey = 1;
+insert into EmployeesDataExceptSalary values ('FirstName', 'M', 11);
+
+--Loome view, mis ühendab kaks eelpool käsitletud tabelit:
+create view EmployeeDetailsByTerritory
+as
+select EmployeeKey, FirstName, BaseRate, Gender, SalesTerritoryRegion
+from DimEmployee e
+join DimSalesTerritory s
+on e.SalesTerritoryKey = s.SalesTerritoryKey;
+
+select * from EmployeeDetailsByTerritory;
+
+--Nüüd uuendame John osakonda HR pealt IT peale. Hetkel on kaks töötajat HR osakonnas
+update EmployeeDetailsByTerritory
+set SalesTerritoryRegion='Southwest' where FirstName = 'Kevin'
+
+--update käsklus ei uuendanud tblEmployees väärtust, vaid tblDepartmenti all
+
+
+
+
+
+
