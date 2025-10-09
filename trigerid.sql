@@ -48,3 +48,49 @@ as
 begin
 print 'You just renamed something'
 end
+
+----------------------------------------------------------------------------
+-- 93. Server-Scoped DDL triggerid
+
+--Käsitletav trigger on andmebaasi vahemikus olev trigger. See ei luba luua, 
+-- muuta ja kustutada tabeleid andmebaasist sinna, kuhu see on loodud.
+create trigger databaseScopeTrigger
+on database
+for CREATE_TABLE, ALTER_TABLE, DROP_TABLE
+as
+begin
+rollback;
+print 'you cannot create, alter or drop a table in the current database'
+end;
+
+--Loo Serveri-vahemikus olev DDL trigger: See on nagu andembaasi vahemiku 
+--trigger, aga erinevus seisneb, et sa pead lisama koodis sõna ALL peale:
+create trigger serverScopeTrigger
+on all server
+for CREATE_TABLE, ALTER_TABLE, DROP_TABLE
+as
+begin
+rollback;
+print 'you cannot create, alter or drop a table in any database on the server'
+end;
+
+--kuidas tühistada
+disable trigger serverScopeTrigger on all server;
+--kuidas lubada
+enable trigger serverScopeTrigger on all server;
+--kuidas kustutada
+drop trigger serverScopeTrigger on all server;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
